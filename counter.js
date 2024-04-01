@@ -11,6 +11,15 @@ export function setupCounter(element) {
     }
   }
 
+  let firstWall = {
+      top: 1,
+      bottom: 7,
+      marginLeft: 5,
+      marginRight: 5
+  }
+
+
+  
   const updateView = () => {
     element.innerHTML = 
     `<pre>${state.content}</pre>`
@@ -19,17 +28,23 @@ export function setupCounter(element) {
   const refreshGrid = () => {
     state.content = ""
     
+    
     for (let h = 0; h < state.size.height; h++) {
       for (let w = 0; w < state.size.width; w++) {
         if (w == state.character.x && h == state.character.y) {
           state.content += "@"
         } else {
-          state.content += "."; //"█"; 
+          if (h >= firstWall.top && h <= firstWall.bottom && w >= firstWall.marginLeft && w <= firstWall.marginRight) {
+            state.content += "█"
+          } else {
+            state.content += "."; //"█"; 
+          }  
         }
       }
       state.content = state.content + "\n"
-    }
+
     updateView()
+    }
   }
 
   const directions = {
@@ -43,6 +58,10 @@ export function setupCounter(element) {
     return x >= 0 && x < state.size.width && y >= 0 && y < state.size.height
   }
 
+  function isOutsideWall (x, y) {
+    return x < firstWall.marginLeft || x > firstWall.marginRight || y < firstWall.top || y > firstWall.bottom
+  }
+
   const moveCharacter = (event) => { 
     const dir = directions[event.key]
     if(dir) {
@@ -50,11 +69,12 @@ export function setupCounter(element) {
 
       const targetY = state.character.y + dir[1]
 
-      if (isInsideGrid(targetX, targetY)) {
+      if (isInsideGrid(targetX, targetY) && isOutsideWall(targetX, targetY)) {
+
         state.character.x = targetX
         state.character.y = targetY
       }
-
+     
     }
     refreshGrid()
   }
