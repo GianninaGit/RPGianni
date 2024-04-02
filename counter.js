@@ -1,8 +1,13 @@
+function isInsideWall (wall, x, y) {
+  return x >= wall.x1 && x <= wall.x2 && y >= wall.y1 && y <= wall.y2
+}
+
+
 export function setupCounter(element) {
   let state = {
     content: "",
     size: {
-      width: 16,
+      width: 20,
       height: 16
     },
     character : {
@@ -11,15 +16,30 @@ export function setupCounter(element) {
     }
   }
 
+  
   let firstWall = {
-      top: 1,
-      bottom: 7,
-      marginLeft: 5,
-      marginRight: 5
+    x1: 5, y1: 1,
+    x2: 5, y2: 7 
+  }
+  
+  let secondWall = {
+    x1: 10, y1: 1,
+    x2: 10, y2: 7 
+  }
+  
+  let paredes = [firstWall, secondWall]
+  
+  function isWallInPosition(x, y) {
+   
+    for (let index = 0; index < paredes.length; index++) {
+      const wall = paredes[index];
+      if (isInsideWall(wall, x, y)) {
+        return true
+      }
+    }
+    return false
   }
 
-
-  
   const updateView = () => {
     element.innerHTML = 
     `<pre>${state.content}</pre>`
@@ -34,7 +54,7 @@ export function setupCounter(element) {
         if (w == state.character.x && h == state.character.y) {
           state.content += "@"
         } else {
-          if (h >= firstWall.top && h <= firstWall.bottom && w >= firstWall.marginLeft && w <= firstWall.marginRight) {
+          if (isWallInPosition(w, h)) {
             state.content += "█"
           } else {
             state.content += "."; //"█"; 
@@ -58,9 +78,7 @@ export function setupCounter(element) {
     return x >= 0 && x < state.size.width && y >= 0 && y < state.size.height
   }
 
-  function isOutsideWall (x, y) {
-    return x < firstWall.marginLeft || x > firstWall.marginRight || y < firstWall.top || y > firstWall.bottom
-  }
+
 
   const moveCharacter = (event) => { 
     const dir = directions[event.key]
@@ -69,7 +87,7 @@ export function setupCounter(element) {
 
       const targetY = state.character.y + dir[1]
 
-      if (isInsideGrid(targetX, targetY) && isOutsideWall(targetX, targetY)) {
+      if (isInsideGrid(targetX, targetY) && !isWallInPosition(targetX, targetY)) {
 
         state.character.x = targetX
         state.character.y = targetY
