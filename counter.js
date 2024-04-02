@@ -2,7 +2,16 @@
 function isInsideRectangle(rectangle, x, y) {
  return x >= rectangle.x && x < rectangle.width + rectangle.x && y >= rectangle.y && y < rectangle.height + rectangle.y
 }
+/*Tarea:
+Hay bichos que no se mueven
+Cuando el personaje camina hacia el bicho le hace un punto de daño
+Los bichos tienen vida
+Cuando se quedan con vida cero, desaparecen
+Algunos bichos se defienden haciendole un daño al personaje cada vez que son atacados
+El personaje tiene vida
+Hay pociones que le devuelven vida al personaje al caminar sobre ellas
 
+*/
 export function setupCounter(element) {
   let state = {
     content: "",
