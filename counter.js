@@ -1,12 +1,14 @@
-function isInsideWall (wall, x, y) {
-  return x >= wall.x1 && x <= wall.x2 && y >= wall.y1 && y <= wall.y2
-}
 
+function isInsideRectangle(rectangle, x, y) {
+ return x >= rectangle.x && x < rectangle.width + rectangle.x && y >= rectangle.y && y < rectangle.height + rectangle.y
+}
 
 export function setupCounter(element) {
   let state = {
     content: "",
     size: {
+      x: 0,
+      y: 0,
       width: 20,
       height: 16
     },
@@ -15,16 +17,16 @@ export function setupCounter(element) {
       y: 0
     }
   }
-
+  
   
   let firstWall = {
-    x1: 5, y1: 1,
-    x2: 5, y2: 7 
+    x: 5, y: 1,
+    width: 1, height: 6 
   }
   
   let secondWall = {
-    x1: 10, y1: 1,
-    x2: 10, y2: 7 
+    x: 10, y: 4,
+    width: 1, height: 6 
   }
   
   let paredes = [firstWall, secondWall]
@@ -33,7 +35,7 @@ export function setupCounter(element) {
    
     for (let index = 0; index < paredes.length; index++) {
       const wall = paredes[index];
-      if (isInsideWall(wall, x, y)) {
+      if (isInsideRectangle(wall, x, y)) {
         return true
       }
     }
@@ -74,9 +76,6 @@ export function setupCounter(element) {
     "ArrowRight": [1, 0]
   }
 
-  function isInsideGrid (x, y) {
-    return x >= 0 && x < state.size.width && y >= 0 && y < state.size.height
-  }
 
 
 
@@ -87,7 +86,7 @@ export function setupCounter(element) {
 
       const targetY = state.character.y + dir[1]
 
-      if (isInsideGrid(targetX, targetY) && !isWallInPosition(targetX, targetY)) {
+      if (isInsideRectangle(state.size, targetX, targetY) && !isWallInPosition(targetX, targetY)) {
 
         state.character.x = targetX
         state.character.y = targetY
