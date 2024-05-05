@@ -23,19 +23,28 @@ Output: [2,1,0,3]
 */
 
 function listaDeNumerosMenoresAlCurrentNumber(lista1DeNumeros) {
-    const cache = {}
-    let listaNueva = [];
-    let cantidadDeChequeos = 0;
+    const cache = {} //para almacenar los resultados calculados.
+    let listaNueva = []; //resultado final a entregar.
+    //let cantidadDeChequeos = 0; //cuenta la cant
+
+    /* 1er for: itera sobre lista de numeros recibida.
+    Para cada elem (currentKey) de la lista, 
+    verifica si su valor ya existe en el diccionario (cache).
+    Si el valor ya existe en cache, 
+    lo agrega a lista nueva (la lista a entregar)*/
     for (let i = 0; i < lista1DeNumeros.length; i++) {
         let currentKey = lista1DeNumeros[i];
         // -->
         if(cache[currentKey] != undefined) {
             listaNueva.push(cache[currentKey]);
         } else {
+
+            /*Si el valor de la currentKey no está en el diccionario
+             */
             let contador = 0;    
-            console.log("Entre al FOR");
+            //console.log("Entre al FOR");
             for (let j = 0; j < lista1DeNumeros.length; j++) {
-                cantidadDeChequeos += 1;
+                //cantidadDeChequeos += 1;
                 if (lista1DeNumeros[j] < currentKey) {
                     contador += 1;
                 }        
@@ -43,16 +52,20 @@ function listaDeNumerosMenoresAlCurrentNumber(lista1DeNumeros) {
             cache[currentKey] = contador;
             listaNueva.push(contador);
         }
+        console.log(cache)
     }
-    console.log("CHEQUEOS CACHE: ", cantidadDeChequeos);
+    //console.log("CHEQUEOS CACHE: ", cantidadDeChequeos);
     return listaNueva;
 }
+console.log("Lista 1:")
+console.log(listaDeNumerosMenoresAlCurrentNumber([6,5,4,8]))
+
 
 function listaDeNumerosMenoresAlCurrentNumber2(nums) {
     const repeticiones = {}
 
     for (let i = 0; i < nums.length; i++) {
-        const n = nums[i];
+        const n = nums[i]; 
         repeticiones[n] = (repeticiones[n] || 0) + 1;
     }
 
@@ -166,7 +179,8 @@ console.log(findCommonElements(array1, array2));
 
 
 /* 804. Unique Morse Code Words
-International Morse Code defines a standard encoding where each letter is mapped to a series of dots and dashes, as follows:
+International Morse Code defines a standard encoding where each letter is mapped to a series of dots 
+and dashes, as follows:
 
     'a' maps to ".-",
     'b' maps to "-...",
@@ -174,11 +188,14 @@ International Morse Code defines a standard encoding where each letter is mapped
 
 For convenience, the full table for the 26 letters of the English alphabet is given below:
 
-[".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
+[".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.",
+"--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
 
-Given an array of strings words where each word can be written as a concatenation of the Morse code of each letter.
+Given an array of strings words where each word can be written as a concatenation of the Morse code 
+of each letter.
 
-    For example, "cab" can be written as "-.-..--...", which is the concatenation of "-.-.", ".-", and "-...". We will call such a concatenation the transformation of a word.
+    For example, "cab" can be written as "-.-..--...", which is the concatenation of "-.-.", ".-", 
+    and "-...". We will call such a concatenation the transformation of a word.
 
 Return the number of different transformations among all words we have.
 
@@ -265,26 +282,35 @@ console.log(cantidadDeCodigosMorseUnicos(words));
 
 
 /* 2325. Decode the Message
-You are given the strings key and message, which represent a cipher key and a secret message, respectively. The steps to decode message are as follows:
-    Use the first appearance of all 26 lowercase English letters in key as the order of the substitution table.
+You are given the strings key and message, which represent a cipher 
+key and a secret message, respectively. The steps to decode message are as follows:
+    Use the first appearance of all 26 lowercase English letters in key as 
+    the order of the substitution table.
     Align the substitution table with the regular English alphabet.
     Each letter in message is then substituted using the table.
     Spaces ' ' are transformed to themselves.
 
-    For example, given key = "happy boy" (actual key would have at least one instance of each letter in the alphabet), we have the partial substitution table of ('h' -> 'a', 'a' -> 'b', 'p' -> 'c', 'y' -> 'd', 'b' -> 'e', 'o' -> 'f').
+    For example, given key = "happy boy" (actual key would have at least one 
+        instance of each letter in the alphabet), we have the partial substitution 
+        table of ('h' -> 'a', 'a' -> 'b', 'p' -> 'c', 'y' -> 'd', 'b' -> 'e',
+         'o' -> 'f').
 Return the decoded message.
 
 Example 1:
-Input: key = "the quick brown fox jumps over the lazy dog", message = "vkbs bs t suepuv"
+Input: key = "the quick brown fox jumps over the lazy dog", message = "vkbs bs t 
+suepuv"
 Output: "this is a secret"
 Explanation: The diagram above shows the substitution table.
-It is obtained by taking the first appearance of each letter in "the quick brown fox jumps over the lazy dog".
+It is obtained by taking the first appearance of each letter in "the quick brown 
+fox jumps over the lazy dog".
 
 Example 2:
-Input: key = "eljuxhpwnyrdgtqkviszcfmabo", message = "zwx hnfx lqantp mnoeius ycgk vcnjrdb"
+Input: key = "eljuxhpwnyrdgtqkviszcfmabo", message = "zwx hnfx lqantp mnoeius ycgk
+ vcnjrdb"
 Output: "the five boxing wizards jump quickly"
 Explanation: The diagram above shows the substitution table.
-It is obtained by taking the first appearance of each letter in "eljuxhpwnyrdgtqkviszcfmabo".
+It is obtained by taking the first appearance of each letter in 
+"eljuxhpwnyrdgtqkviszcfmabo".
 */
 
 

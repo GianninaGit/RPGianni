@@ -11,6 +11,7 @@ function cuantasVecesApareceLetra(palabra) {
     return contador;
 }
 
+console.log("Cuantas veces aparece letra A: ")
 console.log(cuantasVecesApareceLetra("holaa"))
 
 // Devolver la letra con el numero de repeticiones más alto, entre a y e
@@ -32,7 +33,7 @@ function letraConMasRepeticiones(palabra){
     }
     return contadorA;
 }
-
+console.log("Letra con más repeticiones, entre A y E:")
 console.log(letraConMasRepeticiones("arieeeeel alvarez"))
 
 // Lo mismo pero entre A E y U
@@ -47,6 +48,9 @@ function letraConMasRepeticionesAEU(palabra){
     
     return numMasGrandeDeLista(Object.values(repeticiones))
 }
+console.log("Cuantas veces aparece letra A, E y U:")
+console.log(letraConMasRepeticionesAEU("Joruuuudie Saaan"))
+
 
 // IMPORTANTE!!:
 function DeRecuerdo() {
@@ -65,17 +69,21 @@ function DeRecuerdo() {
     }
 
     // Forma de iterar 
-    for (key in keys) {
+    for (let key in keys) {
         const element = unDiccionario[key];
     }
 
     // Forma de iterar 
-    for (key in unDiccionario) {
+    for (let key in unDiccionario) {
         const element = unDiccionario[key];
     }
+
+    //for (let word of words) {} se usa para iterar sobre elementos iterables (conjuntos, mapas)
+    //no necesito el indice (let i = 0, i<array.lenght, i++)
 }
 
-console.log(letraConMasRepeticionesAEU("aeefff ooooooooooo"))
+console.log("De Recuerdo:")
+console.log(DeRecuerdo())
 
 function max(num1, num2) {
     if (num1 > num2) {
