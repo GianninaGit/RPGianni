@@ -12,7 +12,8 @@ console.log(`listaDeNumeros: [${listaDeNumeros.join(', ')}]`);
 console.log(`sumarTodos: ${sumarTodos(listaDeNumeros)}`);
 
 function hayNumeroPar(listaDeNumeros) {
-    //retorna true si al menos un numero de la lista es par, en caso contrario retorna false - ANY
+    /*retorna true si al menos un numero de la lista es par, en caso contrario 
+    retorna false - ANY */
     for (let i = 0; i < listaDeNumeros.length; i++) {
         if (listaDeNumeros[i]%2 == 0) {
             return true;
@@ -37,6 +38,35 @@ console.log(`sonTodosPares: ${sonTodosPares(listaDeNumeros)}`);
 
 function filtrarMenos(listaDeNumeros, numero) {
     //retorna todos los números de la lista original que sean menores al número recibido en argumento
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
     let listaNueva = [];
     for (let i = 0; i < listaDeNumeros.length; i++) {
         if (listaDeNumeros[i] < numero) {

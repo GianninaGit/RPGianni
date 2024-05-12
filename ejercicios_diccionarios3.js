@@ -281,18 +281,12 @@ function decodeMessage (cipherKey, secretMessage) {
             diccionario[keyDeCipherKey] = abecedario[abcIndice];
             //y avanzo el abecedario
             abcIndice += 1;    
-            }
         }
-    
+    }
+
     for (let i = 0; i < secretMessage.length; i++) {
-        
-        let letraSecreta = secretMessage[i];
-        
-        if (letraSecreta in diccionario) {
-            output = output + diccionario[letraSecreta];
-        } else {
-            output = output + " ";
-        }
+        let letraSecreta = secretMessage[i];        
+        output += diccionario[letraSecreta] || letraSecreta;
     }
     
     return output;
@@ -324,25 +318,99 @@ Input: nums = [1,2,3]
 Output: 0
 -----------------ESTRATEGIA---------------
 1) Creo un registro con el valor de cada posición
-*/
+
+Rehacer:
+a) [(rep-1)*rep] / 2 
+[n*(n+1)]/2
+n= rep-1
+n=10
+0 1 2 3
+3 2 1 0
+for para diccionario
+for para acumulador
+
+b) todo en un solo for (usando un dicc tmb) no es un for dentro de un for
+
+Armar un dicciora con clave/valor clave: num y valor: veces que se repite ese num
+A ese valor (repet) aplicarle la formula 
+Ese valor de repeticiones, sumarlo
+Entregar ese num
+
+*/ 
+function combinaciones1(listaRecibida) {
+    let diccionario = {};
+    let combinaciones = 0;
+    let goodPairs = 0;
+
+    for (let i = 0; i < listaRecibida.length; i++) {
+    
+        const element = listaRecibida[i];
+   
+        if (diccionario[element] == undefined) {
+            diccionario[element] = 1;
+        } else {
+            diccionario[element] += 1;
+        }
+    }
+
+    console.log(diccionario)
+
+    for (let key in diccionario) {
+        let n = diccionario[key];
+        combinaciones = [n*(n-1)]/2;
+        //console.log("num: " + n, ", rep: " + combinaciones)
+
+        goodPairs = goodPairs + combinaciones
+    }
+    return goodPairs;
+}
+//console.log("Combinaciones posibles de nums iguales 1: ", combinaciones1([1,2,3,1,1,3])) //[1,1,1,1] //[1,2,3] 
+
+function combinaciones2(listaRecibida) {
+    let goodPairs = 0;
+    let diccionario = {};
+
+    for (let i = 0; i < listaRecibida.length; i++) {
+        const element = listaRecibida[i];
+        
+        if (diccionario[element] == undefined) {
+            diccionario[element] = 1;
+        } else {
+            diccionario[element] += 1;
+        }
+        let n = diccionario[element] - 1;
+        //let formula = [n*(n+1)]/2;
+        
+        
+        goodPairs = goodPairs + n;
+        
+        console.log(n)
+    }
+
+    return goodPairs;
+}
+console.log("Combinaciones posibles de nums iguales 2: ", combinaciones2([1,2,3,1,1,3])) //[1,1,1,1] //[1,2,3] 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function paresPosibles(nums) {
     let goodPairs = 0;
-    let registro = {};
-    
-    //1)
     for (let i = 0; i < nums.length; i++) {
-        
-        let currentNumber = nums[i];
-        registro[i] = currentNumber
-        
-    }
-
-    let keys = Object.keys(registro);
-
-    for (let key in keys) {
-        for (let j in keys) {
-            if (key < j && registro[key] == registro[j]) {
+        for (let j = i + 1; j < nums.length; j++) {            
+            if (nums[i] == nums[j]) {
                 goodPairs += 1
             }
         }
@@ -351,5 +419,19 @@ function paresPosibles(nums) {
     return goodPairs;
 }
 
+function paresPosiblesEficiente(nums) {
+    let repeticiones = {};
+    let goodPairs = 0;
+    for (let i = 0; i < nums.length; i++) {
+        let item = nums[i];
+        let aparicionesPrevias = repeticiones[item] || 0;
+        repeticiones[item] = aparicionesPrevias + 1;
+
+        goodPairs += aparicionesPrevias;
+    }
+    
+    return goodPairs;
+}
+
 let nums = [1,2,3] //[1,1,1,1] //[1,2,3,1,1,3];
-console.log("Number of Good Pairs: ", paresPosibles(nums));
+//console.log("Number of Good Pairs: ", paresPosibles(nums));
