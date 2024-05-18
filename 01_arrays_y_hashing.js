@@ -60,6 +60,7 @@ recorrer palabra 2
 function anagrama2(palabra1, palabra2) {
 
     let diccionario1 = {};
+    let diccionario2 = {};
 
     //1
     if (palabra1.length != palabra2.length) {
@@ -79,13 +80,19 @@ function anagrama2(palabra1, palabra2) {
         for (let i = 0; i < palabra2.length; i++) {
             const letra2 = palabra2[i];
             //3
-            if (diccionario1[letra2] == undefined) {
-                return false;
+            if (diccionario2[letra2] == undefined) {
+                diccionario2[letra2] = 1;
             } else {
-                return true;
-                //falla aacc != ccac
+                diccionario2[letra2] += 1;
             }
         }
+        
+        for (let key in diccionario1) {
+            if (diccionario1[key] != diccionario2[key]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 console.log("Valida anagram: ", anagrama2("anagram", "nagaram"))
@@ -143,9 +150,9 @@ function twoSum1(nums, target) {
 console.log("Two sum1: ", twoSum1([2,7,11,15], 9)); //[0,1]
 console.log("Two sum1: ", twoSum1([3,2,4], 6)); //[1,2]
 console.log("Two sum1: ", twoSum1([3,3], 6)); //[0,1]
-console.log("Two sum2: ", twoSum1([2,1,5,3], 4)); //[1,3]
+console.log("Two sum1: ", twoSum1([2,1,5,3], 4)); //[1,3]
 
-/*---------------ESTRATEGIA 2 EFICIENTE-----NO ME SALIÓ-------------
+/*---------------ESTRATEGIA 2 EFICIENTE-----------------
 1) Creo un diccionario vacío y un par de índices a retornar
 2) Itero sobre la lista recibida
 3) Relleno el diccionario con clave/valor = num/index
@@ -163,22 +170,74 @@ function twoSum2(nums, target) {
     for (let i = 0; i < nums.length; i++) {
         const item = nums[i]; //3
 
-        diccionario[item] = i; //3:0 - num/index
-
-        let incognito = target - item; //6-3 = 3 = incógnito
-
-        if (diccionario[incognito] != undefined ) { 
-            //3 ya existe en el diccionario y lo pisa
-            indices[0] = diccionario[incognito];
-            indices[1] = diccionario[item];
+        if (diccionario[item] == undefined) {
+            diccionario[item] = [i];
+        } else {
+            diccionario[item].push(i); //3:0 - num:[index]
         }
     }
+
+    nums.sort((a, b) => a - b);
+
+    let i = 0;
+    let t = nums.length - 1;
+
+    while(nums[i] + nums[t] != target && t > 0 ) {
+        if (nums[i] + nums[t] > target) {
+            t--;
+        } else {
+            i++;
+        }
+    }
+    
+    indices[0] = diccionario[nums[i]].pop();
+    indices[1] = diccionario[nums[t]].pop();
+
     return indices;
 }
-console.log("Two sum2: ", twoSum2([2,7,11,15], 9)); //[0,1]
+
+console.log("Two sum2 de [2,7,11,15]: ", twoSum2([2,7,11,15], 9)); //[0,1]
 console.log("Two sum2: ", twoSum2([3,2,4], 6)); //[1,2]
 console.log("Two sum2: ", twoSum2([3,3], 6)); // falla, da [1,1]
 console.log("Two sum2: ", twoSum2([2,1,5,3], 4)); //[1,3]
+
+function twoSum3(nums, target) {
+    let diccionario = new Map();
+    let indices = [];
+
+    for (let i = 0; i < nums.length; i++) {
+        const item = nums[i]; //3
+
+        if (diccionario.has(item)) {
+            diccionario.get(item).push(i);
+        } else {
+            diccionario.set(item, [i]); //3:0 - num:[index]
+        }
+    }
+
+    nums.sort((a, b) => a - b);
+
+    let i = 0;
+    let t = nums.length - 1;
+
+    while(nums[i] + nums[t] != target && t > 0 ) {
+        if (nums[i] + nums[t] > target) {
+            t--;
+        } else {
+            i++;
+        }
+    }
+    
+    indices[0] = diccionario.get(nums[i]).pop();
+    indices[1] = diccionario.get(nums[t]).pop();
+
+    return indices;
+};
+
+console.log("Two sum3 de [2,7,11,15]: ", twoSum3([2,7,11,15], 9)); //[0,1]
+console.log("Two sum3: ", twoSum3([3,2,4], 6)); //[1,2]
+console.log("Two sum3: ", twoSum3([3,3], 6)); // falla, da [1,1]
+console.log("Two sum3: ", twoSum3([2,1,5,3], 4)); //[1,3]
 
 /*238. Product of Array Except Self
 
@@ -194,37 +253,71 @@ Output: [24,12,8,6]
 Example 2:
 Input: nums = [-1,1,0,-3,3]
 Output: [0,0,9,0,0]
-----------------------------------ESTRATEGIA--------NO ME SALIÓ------------------------
-1) Recorro lista
-2) Creo una variable resultado
 
 */
+// [1 2 3] x [5 6 7]
 
 function productExceptSelf(nums){
-    let output = [];
-    let resultado = 0;
+
+    // hacer que funcione, indio, roadmap neetcode, documentacion y ejercicios javascript: objetos, cypress
     
-    for (let i = 0; i < nums.length; i++) {
-        
-        /*nums[i+1]
+    //AHORA FUNCIONA
+    //O(n)
+    let producto = nums[0] //1 de [1,2,3,4]
+    let prefixes = [producto] //[1] de [1,2,3,4]
 
-            i = i - nums.length;
-            let numSiguiente = nums[i+1]
-            console.log(i)
-            resultado = nums[-i] * numSiguiente
-            
-        
-        output[i] = resultado;
-        // i = 0
-
-        // i = 1
-        //resultado = nums[i-1] * nums[i+2] * nums[i+3];
-        */
+    for (let i = 1; i < nums.length; i++) {
+        producto = producto * nums[i]
+        prefixes[i] = producto
     }
-    return output;
+
+    producto = nums[nums.length - 1] 
+    let sufixes = [producto] 
+    
+    for (let i = nums.length - 1; i >= 0; i--) {
+        sufixes[i] = producto 
+        producto = producto * nums[i-1] 
+    }
+
+    let products = []
+
+    for (let i = 0; i < nums.length; i++) {
+        if (i == 0) {
+            products[i] = sufixes[i+1];
+        }
+        else if (i == nums.length - 1) {
+            products[i] = prefixes[i-1];
+        } else {
+            products[i] = sufixes[i+1] * prefixes[i-1];
+        }
+    }
+    return products;
 }
 console.log("Product of array except self: ", productExceptSelf([1,2,3,4])) //[24,12,8,6]
 console.log("Product of array except self: ", productExceptSelf([-1,1,0,-3,3])) //[0,0,9,0,0]
+
+
+//--------------EFICIENTE---- TIME COMPLEXITY linear O(n), y SPACE COMPLEXITY constante O(1) porque ya no usa arrays prefijo y sufijo!! --------------
+function productExceptSelf2(nums){
+
+    let output = [1];
+    let prefixes = 1; 
+
+    for (let i = 0; i < nums.length; i++) {
+        output[i] = prefixes
+        prefixes = prefixes * nums[i]
+    }
+
+    let postfix = 1
+    for (let i = nums.length - 1; i >= 0; i--) {
+        output[i] = output[i] * postfix
+        postfix =  postfix * nums[i]       
+    }
+    return output
+}
+console.log("Product of array except self 2: ", productExceptSelf2([1,2,3,4])) //[24,12,8,6]
+console.log("Product of array except self 2: ", productExceptSelf2([-1,1,0,-3,3])) //[0,0,9,0,0]
+
 
 /*125. Valid Palindrome
 A phrase is a palindrome if, after converting all uppercase letters into 
