@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Cuenta Regresiva</title>
+    <style>
+        html {
+            font-family: sans-serif;
+        }
+
+        h2 {
+            font-size: 16px;
+        }
+
+        .a11y-label {
+            margin: 0;
+            text-align: right;
+            font-size: 0.7rem;
+            width: 98%;
+        }
+
+        body {
+            margin: 10px;
+            background: #f5f9fa;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Salida en vivo</h2>
+    <div class="output" style="height: 410px;overflow: auto;"></div>
+
+    <h2>Código editable</h2>
+    <p class="a11y-label">
+        Pulse Esc para alejar el foco del área de código (Tab inserta un carácter de
+        tabulación).
+    </p>
+    <textarea id="code" class="playable-code" style="height: 300px;width: 95%">
+    </textarea>
+
+    <div class="playable-buttons">
+        <input id="reset" type="button" value="Restablecer" />
+        <input id="solution" type="button" value="Mostrar solución" />
+    </div>
+    <script>
+        let output = document.querySelector('.output');
+        output.innerHTML = '';
+
+        let i = 10;
+        
+        while (0 <= i) {
+            // esto crea un párrafo nuevo:
+            let para = document.createElement('p');
+            if (i === 10) {
+                // esto hace que el texto dentro del párrafo tenga valor:
+                para.textContent = "Cuenta regresiva";
+            } else if (i === 0) {
+                para.textContent = "Blast off!";
+            } else {
+                para.textContent = i;
+            }
+            // esto añade el párrafo a la salida output:
+            output.appendChild(para);
+            i--;
+        }
+        
+        
+
+    </script>
+
+</body>
+
+</html>

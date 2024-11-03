@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Lista invitados</title>
+    <style>
+
+    </style>
+  </head>
+    <body>
+
+        <h2>Salida en vivo</h2>
+        <div class="output" style="height: 100px;overflow: auto;">
+        <p class="admitted">Admitir:</p>
+        <p class="refused">Rechazar:</p>
+        </div>
+
+        <h2>Código editable</h2>
+        <p class="a11y-label">
+        Pulse Esc para alejar el foco del área de código (Tab inserta un carácter de
+        tabulación).
+        </p>
+        <textarea id="code" class="playable-code" style="height: 400px;width: 95%">
+        </textarea>
+
+        <div class="playable-buttons">
+          <input id="reset" type="button" value="Restablecer" />
+          <input id="solution" type="button" value="Mostrar solución" />
+        </div>
+
+        <script>
+            let people = ['Chris', 'Anne', 'Colin', 'Terri', 'Phil', 'Lola', 'Sam', 'Kay', 'Bruce'];
+
+            let admitted = document.querySelector('.admitted');
+            let refused = document.querySelector('.refused');
+            admitted.textContent = 'Admitir: ';
+            refused.textContent = 'Rechazar: ';
+
+            // El bucle comienza aquí
+            for (let i = 0; i < people.length; i++) {
+                let persona = people[i];
+                if (persona === "Phil" || persona === "Lola") {
+                    refused.textContent += `${persona}, `;
+                } else {
+                    admitted.textContent += `${persona}, `;
+                }
+                
+            }
+            refused.textContent += refused.textContent.slice(0, refused.textContent.length - 2) + '.';
+            admitted.textContent += admitted.textContent.slice(0, admitted.textContent.length - 2) + '.';
+        </script>
+
+    </body>
+</html> 

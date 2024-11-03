@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Integer squares generator</title>
+    <style>
+
+    </style>
+  </head>
+  <body>
+
+  <label for="number">Enter number: </label>
+  <input id="number" type="text">
+  <button>Generate integer squares</button>
+
+  <p>Output: </p>
+
+
+    <script>
+    const para = document.querySelector('p');
+    const input = document.querySelector('input');
+    const btn = document.querySelector('button');
+
+    btn.addEventListener('click', () => {
+        //al darle al botón, se resetea el contenido del párrafo:
+      para.textContent = 'Output: ';
+      
+      //Se obtiene el valor ingresado por el user, luego resetea y enfoca:
+      const num = input.value;
+      input.value = '';
+      input.focus();
+
+      //Se itera desde 1 hasta el núm ingresado por el user
+      for (let i = 1; i <= num; i++) {
+        //se calcula la raíz cuadrada de i
+        let sqRoot = Math.sqrt(i);
+        /*se verifica si la raíz cuadrada es un num entero
+        y si no lo es, se salta a la siguiente iteración
+        Math.floor(num) redondea el num hacia el num entero más cercano, ej:
+        Math.floor(1.9) = 1
+        Si sqRoot no es igual a Math.floor(sqRoot) significa que  sqRoot 
+        tiene una parte decimal, por lo tanto no es un num entero
+        entonces se pasa a la sig iteración.
+        */
+        if (Math.floor(sqRoot) !== sqRoot) {
+          continue;
+        }
+        /*si es entero, se añade i al contenido del párrafo.
+        Si i= 4 -> Math.sqrt(4) = 2 -> Math.floor(2) = 2
+        Entonces sqRoot (2) es igual a Math.floor(2)
+        por lo tanto, sqRoot es un número entero, y la condición del if no se cumple,
+        entonces no entra al if, no se ejecuta el continue, 
+        y al párrafo se agrega el i.
+        Esto asegura que sólo los i que tienen raices cuadradas enteras se 
+        agreguen al contenido del párrafo.
+        */
+        para.textContent += `${i} `;
+      }
+    });
+
+    </script>
+
+  </body>
+</html>

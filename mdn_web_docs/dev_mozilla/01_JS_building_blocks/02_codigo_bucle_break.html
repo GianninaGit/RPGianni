@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Simple contact search example</title>
+    <style>
+
+    </style>
+  </head>
+  <body>
+
+  <label for="search">Search by contact name: </label>
+  <input id="search" type="text">
+  <button>Search</button>
+
+  <p></p>
+
+
+    <script>
+
+// Array de strings, cada string contiene nombre:telefono:
+let contacts = [
+    "Chris:2232322",
+    "Sarah:3453456",
+    "Bill:7654322",
+    "Mary:9998769",
+    "Dianne:9384975",
+  ];
+  let para = document.querySelector("p");
+  let input = document.querySelector("input");
+  let btn = document.querySelector("button");
+  
+  // Se agrega un detector de eventos al botón btn, para que al hacerle
+  //click, se ejecute un código:
+  btn.addEventListener("click", () => {
+    // Se captura el valor de búsqueda ingresado por el user
+    //tmb se usa .toLowerCase() para que las búsquedas no distingan entre M y m:
+    let searchName = input.value.toLowerCase();
+    
+    // luego se vacía la entrada de texto, y se enfoca el cursor para facilitar una nueva búsqueda:
+    input.value = "";
+    input.focus();
+    //se vacía el párrafo donde se mostrará el resultado:
+    para.textContent = "";
+
+
+    for (let contact of contacts) {
+        //.split crea un array ['Nombre', 'telefono']
+      let splitContact = contact.split(":");
+
+      // añadimos un condicional para verificar si el splitContact[0] (el nombre) en min
+      // es igual al searchName ingresado
+      // si es true, añadimos un string en el párrafo, y con break salgo del bucle.
+      if (splitContact[0].toLowerCase() === searchName) {
+        para.textContent = `El número de ${splitContact[0]} es ${splitContact[1]}.`;
+        break;
+      }
+    }
+    /*Si no hay coincidencias, en el párrafo ponemos este testo: 
+    este if va fuera del for, porque sino, se ejecutaría en cada iteración en la que 
+    no se encuentra una coincidencia. Queremos que el msj se muestre sólo una vez
+    y si no se encontró ninguna coincidencia, dsp de revisar todos los elem.
+    */
+    if (para.textContent === "") {
+      para.textContent = "Contacto no encontrado.";
+    }
+  });
+      </script>
+
+</body>
+</html>
