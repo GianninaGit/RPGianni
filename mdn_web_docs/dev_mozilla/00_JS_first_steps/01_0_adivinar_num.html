@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Number guessing game</title>
+
+  <style>
+    html {
+      font-family: sans-serif;
+    }
+
+    body {
+      width: 50%;
+      max-width: 800px;
+      min-width: 480px;
+      margin: 0 auto;
+    }
+
+    .form input[type="number"] {
+      width: 200px;
+    }
+
+    .lastResult {
+      color: white;
+      padding: 3px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Number guessing game</h1>
+
+  <p>We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We'll tell you if
+    your guess was too high or too low.</p>
+
+  <div class="form">
+    <label for="guessField">Enter a guess: </label>
+    <input type="number" min="1" max="100" required id="guessField" class="guessField">
+    <input type="submit" value="Submit guess" class="guessSubmit">
+  </div>
+
+  <div class="resultParas">
+    <p class="guesses"></p>
+    <p class="lastResult"></p>
+    <p class="lowOrHi"></p>
+  </div>
+
+  <script>
+    // https://developer.mozilla.org/es/docs/Learn/JavaScript/First_steps/A_first_splash#configuraci%C3%B3n_inicial
+
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+    //+1 xq Math() genera un num decimal [0, 1), no incluye al 1.
+
+    const guesses = document.querySelector(".guesses");
+    const lastResult = document.querySelector(".lastResult");
+    const lowOrHi = document.querySelector(".lowOrHi");
+
+    const guessSubmit = document.querySelector(".guessSubmit");
+    const guessField = document.querySelector(".guessField");
+    /** ^ aquí se ha creado la constante guessField para el input.
+     * Para obtenerlo, se usa el método querySelector del objeto document
+     * que toma un párametro: selector CSS de clase .
+     * Ahora esta constante hace referencia a un elemento input
+     * que tiene propiedades y métodos que puedo usar, como .focus()
+     * Las variables que no contienen referencias a elementos de formulario, no dispondrán de este método.
+     * */
+    let guessCount = 1;
+    let resetButton;
+    //focus coloca el cursor automáticamente en el input al cargar la página.
+    guessField.focus();
+
+
+    function checkGuess() {
+      let userGuess = Number(guessField.value);
+      if (guessCount === 1) {
+        guesses.textContent = "Intentos anteriores: ";
+      }
+      guesses.textContent += userGuess + " ";
+
+      if (userGuess === randomNumber) {
+        lastResult.textContent = "¡Felicidades! ¡Lo adivinaste!";
+        lastResult.style.backgroundColor = "green";
+        lowOrHi.textContent = "";
+        setGameOver();
+      } else if (guessCount === 10) {
+        lastResult.textContent = "¡¡¡Fin del juego!!!";
+        setGameOver();
+      } else {
+        lastResult.textContent = "¡Incorrecto!";
+        lastResult.style.backgroundColor = "red";
+        if (userGuess < randomNumber) {
+          lowOrHi.textContent = "¡El número es muy bajo!";
+        } else if (userGuess > randomNumber) {
+          lowOrHi.textContent = "¡El número es muy grande!";
+        }
+      }
+
+      guessCount++;
+      guessField.value = "";
+      guessField.focus();
+    }
+    /**
+     * EVENTO:  cosas que suceden en el navegador (click, cargar pag, reproducir video, etc)
+     * y como rta pueden ejecutar una fc
+     * LISTENER: contrucción que escucha al evento
+     * EVENT CONTROLLER: fc o bloque de codigo que se ejecuta en rta a la activación del evento
+     * 
+     * Se añade el EVENTO addEventListener al botón.
+     * Toma 2 ARGUMENTOS: tipo de evento (click) y fc a ejecutar (checkGuess() )
+     * va sín () xq al ser el 2do argumento del evento, se sabe que es la fc a ejecutar
+    */
+    guessSubmit.addEventListener("click", checkGuess);
+    
+    /**
+     * Las dos primeras líneas deshabilitan el input y el botón p/no enviar más intentos.
+     * Se crea el botón reset y se cambia su texto.
+     * Se establece un evento escucha para cuando se haga click en este botón, y se ejecute la fc.
+    */
+    function setGameOver() {
+      guessField.disabled = true;
+      guessSubmit.disabled = true;
+      resetButton = document.createElement("button");
+      resetButton.textContent = "Iniciar nuevo juego";
+      document.body.append(resetButton);
+      resetButton.addEventListener("click", resetGame);
+    }
+
+    function resetGame() {
+      guessCount = 1;
+
+      const resetParas = document.querySelectorAll(".resultParas p");
+      for (let i = 0; i < resetParas.length; i++) {
+        resetParas[i].textContent = "";
+      }
+
+      resetButton.parentNode.removeChild(resetButton);
+
+      guessField.disabled = false;
+      guessSubmit.disabled = false;
+      guessField.value = "";
+      guessField.focus();
+
+      lastResult.style.backgroundColor = "white";
+
+      randomNumber = Math.floor(Math.random() * 100) + 1;
+    }
+    /**
+     * CONSOLA:
+     * constante que hace referencia a elemento input: .value
+     * constante que hace referencia a elemento p: .textContent
+     *                                             .style.backgroundColor = "yellow";
+     *                                             .style.fontSize = "200%";
+     *                                             .style.padding = "10px";
+     *                                             .style.boxShadow = "3px 3px 6px black";
+     * 
+    */
+  </script>
+</body>
+
+</html>

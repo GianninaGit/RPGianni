@@ -1,0 +1,32 @@
+<button>Cambiar el color</button>
+
+<script>
+
+    const btn = document.querySelector("button");
+    
+    function random(number) {
+      return Math.floor(Math.random() * (number + 1));
+    }
+    
+    /*
+    la fc addEventListener() toma dos parámetros: 
+    - el evento "click"
+    - la fc flecha (sin parámetros)
+    */
+    btn.addEventListener("click", () => {
+      const rndCol = `rgb(${random(255)}, ${random(255)}, ${random(255)})`;
+      document.body.style.backgroundColor = rndCol;
+    });
+
+    /*
+    También podría ponerle nombre a la fc en vez de hacer una fc flecha:
+
+    function changeBackground() {
+        const rndCol = `rgb(${random(255)}, ${random(255)}, ${random(255)})`;
+        document.body.style.backgroundColor = rndCol;
+    }
+
+    btn.addEventListener("click", changeBackground);
+    */
+
+</script>

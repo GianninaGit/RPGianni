@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Apply JavaScript example</title>
+    <script>
+        // JavaScript va aquí
+        document.addEventListener("DOMContentLoaded", function () {
+          function createParagraph() {
+              let para = document.createElement("p");
+              para.textContent = "You clicked the button!";
+              document.body.appendChild(para);
+          }
+          // Hacer la función accesible globalmente para que pueda ser llamada desde el atributo onclick
+          window.createParagraph = createParagraph;
+        });
+        /**
+         * En el html, el elemento <button> incluye un controlador onClick 
+         * que ejecuta la fc cada vez que se hace click en ese botón.
+         * ---------NO USARLO!! mala práctica.----------------
+         * Es ineficiente, y se tendría que incluir este atributo onClick en c/botón.
+        */
+    </script>
+  </head>
+  <body>
+    <button onclick="createParagraph()">Click me!</button>
+    <button>Click 3</button>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Apply JavaScript example</title>
+    <script>
+        // JavaScript va aquí
+        /**
+         * https://developer.mozilla.org/es/docs/Learn/JavaScript/First_steps/What_is_JavaScript
+         * 
+         * El JS dentro de este bloque, no se ejecutará hasta que se active el evento "DOMContentLoaded"
+         * Este evento se activa cuando el body del html está completamente cargado y analizado.
+         * 
+         * En el archivo de js externo, se usa la función defer (sólo funciona para externo)
+         *     <script src="00_2_script.js" defer>
+         * defer le dice al navegador que cargue el script de forma diferida/asincrónica
+         * entonces el navegador continua y descarga el html mientras el script se desc en 2do plano
+         * sólo después de que todo el html se haya descargado y procesado, se ejecuta el script.
+         * 
+         * Antiguamente para solucionar este problema se ponía el script al final del body antes de </body
+         * pero esto puede causar problemas de rendimiento y ralentizar el sitio si el js es muy grande.
+         * 
+         * Para resumir:
+
+        ASYNC y DEFER indican al navegador que descargue los scripts en un hilo separado, 
+        mientras que el resto de la página (el DOM, etc.) se descarga, 
+        por lo que los scripts no bloquean la carga de la página.
+
+        Si tus scripts se deben ejecutar inmediatamente y no tienen ninguna dependencia, utiliza async.
+        Si tus scripts necesitan esperar a ser procesados y dependen de otros scripts 
+        y/o del DOM en su lugar, cárgalos usando defer y coloca tus elementos <script> 
+        correspondientes en el orden que desees que el navegador los ejecute.
+        */
+        document.addEventListener("DOMContentLoaded", function () {
+            function createParagraph() {
+                let para = document.createElement("p");
+                para.textContent = "You clicked the button!";
+                document.body.appendChild(para);
+            }
+
+        const buttons = document.querySelectorAll("button");
+
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener("click", createParagraph);
+        }
+        });
+    </script>
+  </head>
+  <body>
+    <button>Click me</button>
+  </body>
+</html>
