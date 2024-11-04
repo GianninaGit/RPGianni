@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Random color example — event handler attribute</title>
+    <style>
+      button {
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <button>Change color</button>
+    <script>
+      const btn = document.querySelector('button');
+
+      function random(number) {
+        return Math.floor(Math.random() * (number + 1));
+      }
+
+      btn.addEventListener('mouseout', () => {
+        const rndCol = `rgb(${random(255)}, ${random(255)}, ${random(255)})`;
+        document.body.style.backgroundColor = rndCol;
+      });
+
+      /* --------- ADD EVENT LISTENER ---------------------------
+      focus y blur — El color cambia cuando el botón es enfocado y desenfocado; Intenta presionar 
+      la tecla "Tabulador" para enfocar el botón y presionala de nuevo para desenfocarlo. 
+      Estos eventos son normalmente utilizados para mostrar información a la hora de completar 
+      formularios, o incluso para mostrar un mensaje de error si un campo recibe un valor incorrecto.
+      
+      dblclick — El color cambia únicamente cuando se hace doble clic sobre el botón.
+
+      mouseover y mouseout — El color cambia cuando el puntero del ratón pasa por encima del botón, 
+      o cuando el puntero sale del botón, respectivamente.
+
+      Algunos eventos, como click, están disponibles prácticamente en cualquier elemento. 
+      Mientras que otros son más específicos y solo son útiles en ciertas situaciones: 
+      por ejemplo, el evento play solo está disponible en algunos elementos, como <video>.
+    
+        Esto puede hacerse: 
+      elem.addEventListener("click", function1);
+      elem.addEventListener("click", function2);
+      */
+
+      /* --------- EVENT HANDLER PROPERTY ---------------------------
+      Los objetos (botones) que pueden lanzar eventos, tienen propiedades "on..." ej onclick.
+      Son propiedades que manejan eventos.
+      A esa propiedad onclick, le asigno la función flecha/con nombre/ que quiero ejecutar.
+
+        Esto NO puede hacerse: 
+      elem.onclick(function1); -> Se sobreescribiría!
+      elem.onclick(function1);
+      */
+      btn.onclick = () => {
+        let randomColor = `rgb(${random(255)}, ${random(255)}, ${random(255)})`;
+        document.body.style.backgroundColor = randomColor;
+      }
+      function backgroundChange() {
+        const rndCol = `rgb(${random(255)}, ${random(255)}, ${random(255)})`;
+        document.body.style.backgroundColor = rndCol;
+      }
+      btn.onclick = backgroundChange;
+
+    </script>
+  </body>
+</html>
+

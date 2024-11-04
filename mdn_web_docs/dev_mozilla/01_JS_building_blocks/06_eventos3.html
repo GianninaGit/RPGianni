@@ -1,0 +1,59 @@
+<body>
+    <div id="container">
+        <button>¡Haz clic en mi!</button>
+    </div>
+      
+    <pre id="output"></pre>
+
+    <button>Mostrar vídeo</button>
+
+    <div class="hidden">
+        <video>
+            <source
+                src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm"
+                type="video/webm" />
+            <p>
+                Su navegador no es compatible con video HTML. Aquí hay un
+                <a href="rabbit320.mp4">enlace al video</a> en su lugar.
+            </p>
+        </video>
+    </div>
+</body>
+  
+<script>
+    /* --------------- BUBLLE EVENTS ----------------
+    https://developer.mozilla.org/es/docs/Learn/JavaScript/Building_blocks/Events
+
+    El botón se encuentra dentro del elemento DIV (es el padre), y DIV tiene el evento y él lo lanza.
+    */
+    const output = document.querySelector("#output");
+    function handleClick(e) {
+        output.textContent += `Hiciste clic en un elemento ${e.currentTarget.tagName}\n`;
+    }
+
+    const container = document.querySelector("#container");
+    const button = document.querySelector("button");
+
+    document.body.addEventListener("click", handleClick);
+    container.addEventListener("click", handleClick);
+    button.addEventListener("click", handleClick);
+
+    /* BUBBLE UP: el evento se lanza desde el elem más interno que recibió el click
+    Hiciste clic en un elemento BUTTON
+    Hiciste clic en un elemento DIV
+    Hiciste clic en un elemento BODY
+    */
+
+    const btn = document.querySelector("button");
+    const box = document.querySelector("div");
+    const video = document.querySelector("video");
+
+    btn.addEventListener("click", () => box.classList.remove("hidden"));
+
+    video.addEventListener("click", (event) => {
+        event.stopPropagation();
+        video.play();
+    });
+
+    box.addEventListener("click", () => box.classList.add("hidden"));
+</script>
