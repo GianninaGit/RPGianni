@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Events: Task 1</title>
+    <style>
+      p {
+        color: purple;
+        margin: 0.5em 0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      button {
+        display: block;
+        margin: 20px 0 20px 20px;
+      }
+    </style>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+
+  <body>
+
+    <section class="preview">
+    </section>
+
+    <button class="off">Machine is off</button>
+
+  <script>
+    const btn = document.querySelector('.off');
+
+    btn.addEventListener('click', function () {
+        if (btn.classList.contains('off')) {
+            btn.classList.remove('off');
+            btn.classList.add('on');
+            btn.textContent = "Machine is on";
+        } else {
+            btn.classList.remove('on');
+            btn.classList.add('off');
+            btn.textContent = 'Machine is off';
+        }
+    });
+
+  </script>
+
+  </body>
+</html>
